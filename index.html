@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+<!--<a href='index.html' style="margin-right: 5px;">Home</a>
+<a href='published_matters.html' style="margin-right: 5px;">Published Matters</a>
+<a href='conduct_faq.html'>Courtroom Conduct & FAQ</a> -->
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mayflower District Court for the County of Clark</title>
+    
+    <!-- Open Graph meta tags -->
+    <meta property="og:title" content="Mayflower District Court for the County of Clark - Judge krabzatonin"/>
+    <meta property="og:description" content="Access the latest court orders and documents from Judge krabzatonin."/>
+    <meta property="og:image" content="blob:https://imgur.com/1540acbe-bd40-4273-9aa9-788fd3cea01e"/> <!-- Replace with your image URL -->
+</head>
+<body>
+    <center><img width="120" src="https://i.imgur.com/Cw65AfX.png">
+    <h1>Mayflower District Court for the County of Clark</h1>
+    <h3>Mersea Courthouse Basement</h3></center>
+    <p>This is an attempt at storing transcripts here.</p>
+
+    <h1>Volume 1</h1>
+    <ul id="volume1"></ul>
+
+    <h1>Volume 2</h1>
+    <ul id="volume2"></ul>
+
+    <h1>Other/Miscellaneous</h1>
+    <ul id="other"></ul>
+
+    <script>
+      const repoOwner = 'krabzholder';  
+      const repoName = 'ack-mayflower-pacer';
+
+      async function fetchFileList(folderPath, listId) {
+        const apiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${folderPath}`;
+        try {
+          const response = await fetch(apiUrl);
+          if (!response.ok) throw new Error(`Failed to fetch file list from ${folderPath}`);
+          const files = await response.json();
+          updateFileList(files, listId);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+
+
+      function updateFileList(files, listId) {
+        const fileList = document.getElementById(listId);
+        fileList.innerHTML = '';  
+
+        files.forEach(file => {
+          const listItem = document.createElement('li');
+          const fileLink = document.createElement('a');
+          
+
+          fileLink.href = `https://github.com/${repoOwner}/${repoName}/blob/main/${encodeURIComponent(file.path)}`;
+          fileLink.textContent = file.name;
+          fileLink.target = '_blank'; 
+          listItem.appendChild(fileLink);
+          fileList.appendChild(listItem);
+        });
+      }
+
+
+      fetchFileList('volume1', 'volume1');
+      fetchFileList('volume2', 'volume2');
+      fetchFileList('other', 'other');
+    </script>
