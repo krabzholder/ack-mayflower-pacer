@@ -1,9 +1,4 @@
 <!DOCTYPE html>
-
-<!--<a href='index.html' style="margin-right: 5px;">Home</a>
-<a href='published_matters.html' style="margin-right: 5px;">Published Matters</a>
-<a href='conduct_faq.html'>Courtroom Conduct & FAQ</a> -->
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -40,14 +35,13 @@
           const response = await fetch(apiUrl);
           if (!response.ok) throw new Error(`Failed to fetch file list from ${folderPath}`);
           const files = await response.json();
-          updateFileList(files, listId);
+          updateFileList(files, listId, folderPath);
         } catch (error) {
           console.error(error);
         }
       }
 
-
-      function updateFileList(files, listId) {
+      function updateFileList(files, listId, folderPath) {
         const fileList = document.getElementById(listId);
         fileList.innerHTML = '';  
 
@@ -55,9 +49,8 @@
           const listItem = document.createElement('li');
           const fileLink = document.createElement('a');
           
-
-          //fileLink.href = `https://github.com/${repoOwner}/${repoName}/blob/main/${encodeURIComponent(file.path)}`;
-            fileLink.href = `https://${repoOwner}.github.io/${repoName}/${encodeURIComponent(file.path)}`;
+          // Construct the URL to point to the file's path within the GitHub Pages site
+          fileLink.href = `https://${repoOwner}.github.io/${repoName}/${folderPath}/${encodeURIComponent(file.name)}`;
           fileLink.textContent = file.name;
           fileLink.target = '_blank'; 
           listItem.appendChild(fileLink);
@@ -65,8 +58,10 @@
         });
       }
 
-
+      // Fetch files for each folder and populate the lists
       fetchFileList('volume1', 'volume1');
       fetchFileList('volume2', 'volume2');
       fetchFileList('other', 'other');
     </script>
+</body>
+</html>
