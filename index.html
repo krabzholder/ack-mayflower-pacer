@@ -56,7 +56,8 @@
           const fileLink = document.createElement('a');
           
 
-          fileLink.href = `https://github.com/${repoOwner}/${repoName}/blob/main/${encodeURIComponent(file.path)}`;
+          //fileLink.href = `https://github.com/${repoOwner}/${repoName}/blob/main/${encodeURIComponent(file.path)}`;
+            fileLink.href = `https://${repoOwner}.github.io/${repoName}/${encodeURIComponent(file.path)}`;
           fileLink.textContent = file.name;
           fileLink.target = '_blank'; 
           listItem.appendChild(fileLink);
