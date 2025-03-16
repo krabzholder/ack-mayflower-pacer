@@ -1,66 +1,187 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mayflower District Court for the County of Clark</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mayflower District Court for the County of Clark</title>
+  
+  <!-- Open Graph meta tags -->
+  <meta property="og:title" content="Mayflower District Court for the County of Clark"/>
+  <meta property="og:description" content="Mersea Courtroom Basement - Previous Volumes"/>
+  <meta property="og:image" content="https://i.imgur.com/Mw6pHg0.png"/>
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+
+  
+  <!-- Google Fonts for modern typography -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* Reset and base styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
     
-    <!-- Open Graph meta tags -->
-    <meta property="og:title" content="Mayflower District Court for the County of Clark"/>
-    <meta property="og:description" content="Mersea Courtroom Basement - Previous Volumes"/>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
+      color: #333;
+      line-height: 1.6;
+      padding: 20px;
+    }
+    
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    header img {
+      width: 120px;
+      margin-bottom: 10px;
+    }
+    
+    header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      color: #2c3e50;
+    }
+    
+    header h3 {
+      font-size: 1.2rem;
+      color: #7f8c8d;
+    }
+    
+    p {
+      margin-bottom: 20px;
+    }
+    
+    h1.section-title {
+      margin: 30px 0 20px;
+      border-bottom: 2px solid #2c3e50;
+      padding-bottom: 10px;
+    }
+    
+    #searchBar {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+    
+    ul {
+      list-style-type: none;
+    }
+    
+    ul li {
+      background: #f9f9f9;
+      margin-bottom: 10px;
+      padding: 15px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    ul li:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+    
+    ul li a {
+      text-decoration: none;
+      color: #2980b9;
+      font-weight: 700;
+    }
+    
+    @media (max-width: 600px) {
+      header h1 { font-size: 2rem; }
+      header h3 { font-size: 1rem; }
+      .container { padding: 20px; }
+    }
+  </style>
 </head>
 <body>
-    <center><img width="120" src="https://i.imgur.com/Cw65AfX.png">
-    <h1>Mayflower District Court for the County of Clark</h1>
-    <h3>Mersea Courthouse Basement</h3></center>
-    <p>This is an attempt at storing transcripts here.</p>
-
-    <h1>Archived Cases</h1>
+  <div class="container">
+    <header>
+      <img src="https://i.imgur.com/Cw65AfX.png" alt="Logo">
+      <h1>Mayflower District Court for the County of Clark</h1>
+      <h3>Mersea Courthouse Basement</h3>
+    </header>
+    
+    <p>This is an attempt at storing transcripts here. Attached images are converted to base64 so they are preserved upon channel deletion.</p>
+    
+    <h1 class="section-title">Archived Cases</h1>
+    <!-- Search bar -->
+    <input type="text" id="searchBar" placeholder="Search Cases...">
     <ul id="volume1"></ul>
-
-    <h1>Volume 2</h1>
-    <ul id="volume2"></ul>
-
-    <h1>Other/Miscellaneous</h1>
-    <ul id="other"></ul>
-
+    
     <script>
       const repoOwner = 'krabzholder';  
       const repoName = 'ack-mayflower-pacer';
-
+      let allFiles = [];
+    
       async function fetchFileList(folderPath, listId) {
         const apiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${folderPath}`;
         try {
           const response = await fetch(apiUrl);
           if (!response.ok) throw new Error(`Failed to fetch file list from ${folderPath}`);
           const files = await response.json();
+          allFiles = files;
           updateFileList(files, listId, folderPath);
         } catch (error) {
           console.error(error);
         }
       }
-
+    
       function updateFileList(files, listId, folderPath) {
         const fileList = document.getElementById(listId);
         fileList.innerHTML = '';  
-
+    
         files.forEach(file => {
           const listItem = document.createElement('li');
           const fileLink = document.createElement('a');
           
           // Construct the URL to point to the file's path within the GitHub Pages site
           fileLink.href = `https://${repoOwner}.github.io/${repoName}/${folderPath}/${encodeURIComponent(file.name)}`;
-          fileLink.textContent = file.name;
+          
+          // Format the display text: remove ".html" and replace hyphens with spaces
+          let displayName = file.name.replace(/\.html$/, '').replace(/-/g, ' ');
+          
+          fileLink.textContent = displayName;
           fileLink.target = '_blank'; 
           listItem.appendChild(fileLink);
           fileList.appendChild(listItem);
         });
       }
-
-      // Fetch files for each folder and populate the lists
+    
+      function filterFiles(searchTerm) {
+        const filteredFiles = allFiles.filter(file => {
+          let displayName = file.name.replace(/\.html$/, '').replace(/-/g, ' ').toLowerCase();
+          return displayName.includes(searchTerm.toLowerCase());
+        });
+        updateFileList(filteredFiles, 'volume1', 'volume1');
+      }
+    
+      // Fetch files for the folder and populate the list
       fetchFileList('volume1', 'volume1');
-      fetchFileList('volume2', 'volume2');
-      fetchFileList('other', 'other');
+    
+      // Listen for input events on the search bar and filter cases accordingly
+      document.getElementById('searchBar').addEventListener('input', function(e) {
+        filterFiles(e.target.value);
+      });
     </script>
+  </div>
 </body>
 </html>
