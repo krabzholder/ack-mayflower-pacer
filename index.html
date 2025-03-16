@@ -119,7 +119,7 @@
       margin-right: 10px;
     }
     
-    .preview-btn, .open-btn {
+    .preview-btn, .open-btn, .trello-btn, .courts-btn {
       margin: 5px;
       padding: 5px 10px;
       border: none;
@@ -138,12 +138,30 @@
       color: #fff;
     }
     
+    .trello-btn {
+      background-color: #f39c12;
+      color: #fff;
+    }
+    
+    .courts-btn {
+      background-color: #e74c3c;
+      color: #fff;
+    }
+    
     .preview-btn:hover {
       background-color: #3498db;
     }
     
     .open-btn:hover {
       background-color: #28b463;
+    }
+    
+    .trello-btn:hover {
+      background-color: #e67e22;
+    }
+    
+    .courts-btn:hover {
+      background-color: #c0392b;
     }
     
     /* Dark mode styles */
@@ -179,6 +197,16 @@
     
     body.dark-mode .open-btn {
       background-color: #64b5f6;
+      color: #000;
+    }
+    
+    body.dark-mode .trello-btn {
+      background-color: #f1c40f;
+      color: #000;
+    }
+    
+    body.dark-mode .courts-btn {
+      background-color: #e77e70;
       color: #000;
     }
     
@@ -290,6 +318,50 @@
     const repoName = 'ack-mayflower-pacer';
     let allFiles = [];
     
+    // Simple formatting for file names (customize as needed)
+    function formatFileName(fileName) {
+      let name = fileName.replace(/\.html$/, '');
+      return name.replace(/-/g, ' ');
+    }
+    
+    // This function fetches the file's content and checks for both Trello and Courts site links.
+    function addExternalButtons(fileUrl, itemContainer) {
+      fetch(fileUrl)
+        .then(response => response.text())
+        .then(text => {
+          // Look for a Trello card link using regex /trello\.com\/c\/([a-zA-Z0-9]+)/
+          const trelloRegex = /trello\.com\/c\/([a-zA-Z0-9]+)/;
+          const trelloMatch = text.match(trelloRegex);
+          if (trelloMatch && trelloMatch[1]) {
+            const trelloCardId = trelloMatch[1];
+            const trelloUrl = `https://trello.com/c/${trelloCardId}`;
+            const trelloBtn = document.createElement('button');
+            trelloBtn.textContent = 'Trello Card';
+            trelloBtn.classList.add('trello-btn');
+            trelloBtn.addEventListener('click', function() {
+              window.open(trelloUrl, '_blank');
+            });
+            itemContainer.appendChild(trelloBtn);
+          }
+          
+          // Look for a Courts site link using regex /courts\.clarkcounty\.site\/view\/(\d+)/
+          const courtsRegex = /courts\.clarkcounty\.site\/view\/(\d+)/;
+          const courtsMatch = text.match(courtsRegex);
+          if (courtsMatch && courtsMatch[1]) {
+            const courtsId = courtsMatch[1];
+            const courtsUrl = `https://courts.clarkcounty.site/view/${courtsId}`;
+            const courtsBtn = document.createElement('button');
+            courtsBtn.textContent = 'Courts Site';
+            courtsBtn.classList.add('courts-btn');
+            courtsBtn.addEventListener('click', function() {
+              window.open(courtsUrl, '_blank');
+            });
+            itemContainer.appendChild(courtsBtn);
+          }
+        })
+        .catch(err => console.error('Error fetching file for external link parsing:', err));
+    }
+    
     async function fetchFileList(folderPath, listId) {
       const apiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${folderPath}`;
       try {
@@ -312,9 +384,7 @@
         const itemContainer = document.createElement('div');
         itemContainer.classList.add('file-item');
         
-        // Format the display text: remove ".html" and replace hyphens with spaces
-        let displayName = file.name.replace(/\.html$/, '').replace(/-/g, ' ');
-        
+        const displayName = formatFileName(file.name);
         const nameElem = document.createElement('span');
         nameElem.classList.add('file-name');
         nameElem.textContent = displayName;
@@ -338,6 +408,11 @@
         itemContainer.appendChild(nameElem);
         itemContainer.appendChild(previewBtn);
         itemContainer.appendChild(openBtn);
+        
+        // Add external buttons (Trello and/or Courts Site) if links are found in the file content
+        const fileUrl = `https://${repoOwner}.github.io/${repoName}/${folderPath}/${encodeURIComponent(file.name)}`;
+        addExternalButtons(fileUrl, itemContainer);
+        
         listItem.appendChild(itemContainer);
         fileList.appendChild(listItem);
       });
@@ -345,7 +420,7 @@
     
     function filterFiles(searchTerm) {
       const filteredFiles = allFiles.filter(file => {
-        let displayName = file.name.replace(/\.html$/, '').replace(/-/g, ' ').toLowerCase();
+        let displayName = formatFileName(file.name).toLowerCase();
         return displayName.includes(searchTerm.toLowerCase());
       });
       updateFileList(filteredFiles, 'volume1', 'volume1');
