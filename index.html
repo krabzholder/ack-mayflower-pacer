@@ -14,6 +14,8 @@
   
   <!-- Google Fonts for modern typography -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Merriweather for a classic, legal header look -->
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&display=swap" rel="stylesheet">
   
   <style>
     /* Reset and base styles */
@@ -25,7 +27,7 @@
     
     body {
       font-family: 'Roboto', sans-serif;
-      background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
+      background: linear-gradient(135deg, #f8f9fa, #e9ecef);
       color: #333;
       line-height: 1.6;
       padding: 20px;
@@ -38,6 +40,7 @@
       background: #fff;
       padding: 30px;
       border-radius: 8px;
+      border: 1px solid #dee2e6;
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
       transition: background 0.3s ease, box-shadow 0.3s ease;
     }
@@ -53,6 +56,7 @@
     }
     
     header h1 {
+      font-family: 'Merriweather', serif;
       font-size: 2.5rem;
       margin-bottom: 10px;
       color: #2c3e50;
@@ -60,7 +64,7 @@
     
     header h3 {
       font-size: 1.2rem;
-      color: #7f8c8d;
+      color: #6c757d;
     }
     
     p {
@@ -77,7 +81,7 @@
       width: 100%;
       padding: 10px;
       margin-bottom: 20px;
-      border: 1px solid #ccc;
+      border: 1px solid #ced4da;
       border-radius: 5px;
       font-size: 1rem;
     }
@@ -87,23 +91,59 @@
     }
     
     ul li {
-      background: #f9f9f9;
+      background: #f1f3f5;
       margin-bottom: 10px;
       padding: 15px;
       border-radius: 5px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      border: 1px solid #ced4da;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
     
     ul li:hover {
       transform: translateY(-3px);
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
     
-    ul li a {
-      text-decoration: none;
-      color: #2980b9;
+    /* File item container */
+    .file-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    
+    .file-name {
+      flex: 1;
       font-weight: 700;
+      margin-right: 10px;
+    }
+    
+    .preview-btn, .open-btn {
+      margin: 5px;
+      padding: 5px 10px;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+    
+    .preview-btn {
+      background-color: #5dade2;
+      color: #fff;
+    }
+    
+    .open-btn {
+      background-color: #58d68d;
+      color: #fff;
+    }
+    
+    .preview-btn:hover {
+      background-color: #3498db;
+    }
+    
+    .open-btn:hover {
+      background-color: #28b463;
     }
     
     /* Dark mode styles */
@@ -114,6 +154,7 @@
     
     body.dark-mode .container {
       background: #1e1e1e;
+      border-color: #343a40;
       box-shadow: 0 4px 8px rgba(0,0,0,0.5);
     }
     
@@ -126,12 +167,19 @@
     }
     
     body.dark-mode ul li {
-      background: #333;
+      background: #343a40;
+      border-color: #495057;
       box-shadow: 0 2px 5px rgba(0,0,0,0.3);
     }
     
-    body.dark-mode ul li a {
-      color: #81d4fa;
+    body.dark-mode .preview-btn {
+      background-color: #81c784;
+      color: #000;
+    }
+    
+    body.dark-mode .open-btn {
+      background-color: #64b5f6;
+      color: #000;
     }
     
     /* Dark mode toggle button styles */
@@ -160,6 +208,54 @@
       header h3 { font-size: 1rem; }
       .container { padding: 20px; }
     }
+    
+    /* Modal styles for preview */
+    #previewModal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    #modalContent {
+      position: relative;
+      width: 80%;
+      height: 80%;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+    
+    #closeModal {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 2rem;
+      color: #333;
+      cursor: pointer;
+      z-index: 2100;
+    }
+    
+    #previewFrame {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    
+    /* Dark mode adjustments for modal */
+    body.dark-mode #modalContent {
+      background: #1e1e1e;
+    }
+    body.dark-mode #closeModal {
+      color: #e0e0e0;
+    }
   </style>
 </head>
 <body>
@@ -173,79 +269,123 @@
       <h3>Mersea Courthouse Basement</h3>
     </header>
     
-    <p>This is an attempt at storing transcripts here. Attached images are converted to base64 so they are preserved upon channel deletion.</p>
+    <p>This is an official record-keeping site for transcripts and previous case documents. Attached images are converted to base64 to ensure preservation.</p>
     
     <h1 class="section-title">Archived Cases</h1>
     <!-- Search bar -->
     <input type="text" id="searchBar" placeholder="Search Cases...">
     <ul id="volume1"></ul>
-    
-    <script>
-      const repoOwner = 'krabzholder';  
-      const repoName = 'ack-mayflower-pacer';
-      let allFiles = [];
-    
-      async function fetchFileList(folderPath, listId) {
-        const apiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${folderPath}`;
-        try {
-          const response = await fetch(apiUrl);
-          if (!response.ok) throw new Error(`Failed to fetch file list from ${folderPath}`);
-          const files = await response.json();
-          allFiles = files;
-          updateFileList(files, listId, folderPath);
-        } catch (error) {
-          console.error(error);
-        }
-      }
-    
-      function updateFileList(files, listId, folderPath) {
-        const fileList = document.getElementById(listId);
-        fileList.innerHTML = '';  
-    
-        files.forEach(file => {
-          const listItem = document.createElement('li');
-          const fileLink = document.createElement('a');
-          
-          // Construct the URL to point to the file's path within the GitHub Pages site
-          fileLink.href = `https://${repoOwner}.github.io/${repoName}/${folderPath}/${encodeURIComponent(file.name)}`;
-          
-          // Format the display text: remove ".html" and replace hyphens with spaces
-          let displayName = file.name.replace(/\.html$/, '').replace(/-/g, ' ');
-          
-          fileLink.textContent = displayName;
-          fileLink.target = '_blank'; 
-          listItem.appendChild(fileLink);
-          fileList.appendChild(listItem);
-        });
-      }
-    
-      function filterFiles(searchTerm) {
-        const filteredFiles = allFiles.filter(file => {
-          let displayName = file.name.replace(/\.html$/, '').replace(/-/g, ' ').toLowerCase();
-          return displayName.includes(searchTerm.toLowerCase());
-        });
-        updateFileList(filteredFiles, 'volume1', 'volume1');
-      }
-    
-      // Fetch files for the folder and populate the list
-      fetchFileList('volume1', 'volume1');
-    
-      // Listen for input events on the search bar and filter cases accordingly
-      document.getElementById('searchBar').addEventListener('input', function(e) {
-        filterFiles(e.target.value);
-      });
-    
-      // Toggle dark mode when the button is clicked
-      document.getElementById('darkModeToggle').addEventListener('click', function() {
-        document.body.classList.toggle('dark-mode');
-        // Optionally update button text based on mode
-        if(document.body.classList.contains('dark-mode')) {
-          this.textContent = 'Light Mode';
-        } else {
-          this.textContent = 'Dark Mode';
-        }
-      });
-    </script>
   </div>
+  
+  <!-- Preview Modal -->
+  <div id="previewModal">
+    <div id="modalContent">
+      <span id="closeModal">&times;</span>
+      <iframe id="previewFrame" src=""></iframe>
+    </div>
+  </div>
+  
+  <script>
+    const repoOwner = 'krabzholder';
+    const repoName = 'ack-mayflower-pacer';
+    let allFiles = [];
+    
+    async function fetchFileList(folderPath, listId) {
+      const apiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${folderPath}`;
+      try {
+        const response = await fetch(apiUrl);
+        if (!response.ok) throw new Error(`Failed to fetch file list from ${folderPath}`);
+        const files = await response.json();
+        allFiles = files;
+        updateFileList(files, listId, folderPath);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    
+    function updateFileList(files, listId, folderPath) {
+      const fileList = document.getElementById(listId);
+      fileList.innerHTML = '';
+      
+      files.forEach(file => {
+        const listItem = document.createElement('li');
+        const itemContainer = document.createElement('div');
+        itemContainer.classList.add('file-item');
+        
+        // Format the display text: remove ".html" and replace hyphens with spaces
+        let displayName = file.name.replace(/\.html$/, '').replace(/-/g, ' ');
+        
+        const nameElem = document.createElement('span');
+        nameElem.classList.add('file-name');
+        nameElem.textContent = displayName;
+        
+        // Create Preview button
+        const previewBtn = document.createElement('button');
+        previewBtn.textContent = 'Preview';
+        previewBtn.classList.add('preview-btn');
+        previewBtn.addEventListener('click', function() {
+          openPreviewModal(`https://${repoOwner}.github.io/${repoName}/${folderPath}/${encodeURIComponent(file.name)}`);
+        });
+        
+        // Create Open in New Tab button
+        const openBtn = document.createElement('button');
+        openBtn.textContent = 'Open in New Tab';
+        openBtn.classList.add('open-btn');
+        openBtn.addEventListener('click', function() {
+          window.open(`https://${repoOwner}.github.io/${repoName}/${folderPath}/${encodeURIComponent(file.name)}`, '_blank');
+        });
+        
+        itemContainer.appendChild(nameElem);
+        itemContainer.appendChild(previewBtn);
+        itemContainer.appendChild(openBtn);
+        listItem.appendChild(itemContainer);
+        fileList.appendChild(listItem);
+      });
+    }
+    
+    function filterFiles(searchTerm) {
+      const filteredFiles = allFiles.filter(file => {
+        let displayName = file.name.replace(/\.html$/, '').replace(/-/g, ' ').toLowerCase();
+        return displayName.includes(searchTerm.toLowerCase());
+      });
+      updateFileList(filteredFiles, 'volume1', 'volume1');
+    }
+    
+    // Initial fetch of files for 'volume1'
+    fetchFileList('volume1', 'volume1');
+    
+    // Search bar event listener
+    document.getElementById('searchBar').addEventListener('input', function(e) {
+      filterFiles(e.target.value);
+    });
+    
+    // Dark mode toggle
+    document.getElementById('darkModeToggle').addEventListener('click', function() {
+      document.body.classList.toggle('dark-mode');
+      this.textContent = document.body.classList.contains('dark-mode') ? 'Light Mode' : 'Dark Mode';
+    });
+    
+    // Modal preview functionality
+    const previewModal = document.getElementById('previewModal');
+    const previewFrame = document.getElementById('previewFrame');
+    const closeModal = document.getElementById('closeModal');
+    
+    function openPreviewModal(url) {
+      previewFrame.src = url;
+      previewModal.style.display = 'flex';
+    }
+    
+    closeModal.addEventListener('click', function() {
+      previewModal.style.display = 'none';
+      previewFrame.src = "";
+    });
+    
+    window.addEventListener('click', function(event) {
+      if (event.target === previewModal) {
+        previewModal.style.display = 'none';
+        previewFrame.src = "";
+      }
+    });
+  </script>
 </body>
 </html>
