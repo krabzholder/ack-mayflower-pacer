@@ -1,30 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mayflower District Court for the County of Clark</title>
-  
+
   <!-- Open Graph meta tags -->
   <meta property="og:title" content="Mayflower District Court for the County of Clark"/>
   <meta property="og:description" content="Mersea Courtroom Basement - Previous Volumes"/>
   <meta property="og:image" content="https://i.imgur.com/Mw6pHg0.png"/>
   <meta property="og:image:width" content="1200"/>
   <meta property="og:image:height" content="630"/>
-  
-  <!-- Google Fonts for modern typography -->
+
+  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-  <!-- Merriweather for a classic, legal header look -->
   <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&display=swap" rel="stylesheet">
-  
+
   <style>
-    /* Reset and base styles */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    
+    /* (same base styles as original) */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
       font-family: 'Roboto', sans-serif;
       background: linear-gradient(135deg, #f8f9fa, #e9ecef);
@@ -33,7 +28,7 @@
       padding: 20px;
       transition: background 0.3s ease, color 0.3s ease;
     }
-    
+
     .container {
       max-width: 960px;
       margin: 0 auto;
@@ -42,41 +37,38 @@
       border-radius: 8px;
       border: 1px solid #dee2e6;
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      transition: background 0.3s ease, box-shadow 0.3s ease;
     }
-    
+
     header {
       text-align: center;
       margin-bottom: 30px;
     }
-    
+
     header img {
       width: 120px;
       margin-bottom: 10px;
     }
-    
+
     header h1 {
       font-family: 'Merriweather', serif;
       font-size: 2.5rem;
       margin-bottom: 10px;
       color: #2c3e50;
     }
-    
+
     header h3 {
       font-size: 1.2rem;
       color: #6c757d;
     }
-    
-    p {
-      margin-bottom: 20px;
-    }
-    
+
+    p { margin-bottom: 20px; }
+
     h1.section-title {
       margin: 30px 0 20px;
       border-bottom: 2px solid #2c3e50;
       padding-bottom: 10px;
     }
-    
+
     #searchBar {
       width: 100%;
       padding: 10px;
@@ -85,11 +77,11 @@
       border-radius: 5px;
       font-size: 1rem;
     }
-    
+
     ul {
       list-style-type: none;
     }
-    
+
     ul li {
       background: #f1f3f5;
       margin-bottom: 10px;
@@ -99,26 +91,40 @@
       box-shadow: 0 2px 5px rgba(0,0,0,0.05);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-    
+
     ul li:hover {
       transform: translateY(-3px);
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
-    
-    /* File item container */
+
     .file-item {
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
     }
-    
+
     .file-name {
       flex: 1;
       font-weight: 700;
       margin-right: 10px;
     }
-    
+
+    .volume-badge {
+      display: inline-block;
+      background-color: #007bff;
+      color: white;
+      font-size: 0.75rem;
+      font-weight: bold;
+      border-radius: 12px;
+      padding: 3px 8px;
+      margin-left: 8px;
+    }
+
+    .volume2-badge {
+      background-color: #dc3545;
+    }
+
     .preview-btn, .open-btn, .trello-btn, .courts-btn {
       margin: 5px;
       padding: 5px 10px;
@@ -127,90 +133,41 @@
       cursor: pointer;
       font-size: 0.9rem;
     }
-    
-    .preview-btn {
-      background-color: #5dade2;
-      color: #fff;
-    }
-    
-    .open-btn {
-      background-color: #58d68d;
-      color: #fff;
-    }
-    
-    .trello-btn {
-      background-color: #f39c12;
-      color: #fff;
-    }
-    
-    .courts-btn {
-      background-color: #e74c3c;
-      color: #fff;
-    }
-    
-    .preview-btn:hover {
-      background-color: #3498db;
-    }
-    
-    .open-btn:hover {
-      background-color: #28b463;
-    }
-    
-    .trello-btn:hover {
-      background-color: #e67e22;
-    }
-    
-    .courts-btn:hover {
-      background-color: #c0392b;
-    }
-    
-    /* Dark mode styles */
+
+    .preview-btn { background-color: #5dade2; color: #fff; }
+    .open-btn { background-color: #58d68d; color: #fff; }
+    .trello-btn { background-color: #f39c12; color: #fff; }
+    .courts-btn { background-color: #e74c3c; color: #fff; }
+
+    .preview-btn:hover { background-color: #3498db; }
+    .open-btn:hover { background-color: #28b463; }
+    .trello-btn:hover { background-color: #e67e22; }
+    .courts-btn:hover { background-color: #c0392b; }
+
     body.dark-mode {
       background: #121212;
       color: #e0e0e0;
     }
-    
+
     body.dark-mode .container {
       background: #1e1e1e;
       border-color: #343a40;
       box-shadow: 0 4px 8px rgba(0,0,0,0.5);
     }
-    
-    body.dark-mode header h1 {
-      color: #fff;
-    }
-    
-    body.dark-mode header h3 {
-      color: #ccc;
-    }
-    
+
+    body.dark-mode header h1 { color: #fff; }
+    body.dark-mode header h3 { color: #ccc; }
     body.dark-mode ul li {
       background: #343a40;
       border-color: #495057;
       box-shadow: 0 2px 5px rgba(0,0,0,0.3);
     }
-    
-    body.dark-mode .preview-btn {
-      background-color: #81c784;
-      color: #000;
-    }
-    
-    body.dark-mode .open-btn {
-      background-color: #64b5f6;
-      color: #000;
-    }
-    
-    body.dark-mode .trello-btn {
-      background-color: #f1c40f;
-      color: #000;
-    }
-    
-    body.dark-mode .courts-btn {
-      background-color: #e77e70;
-      color: #000;
-    }
-    
-    /* Dark mode toggle button styles */
+
+    body.dark-mode .preview-btn { background-color: #81c784; color: #000; }
+    body.dark-mode .open-btn { background-color: #64b5f6; color: #000; }
+    body.dark-mode .trello-btn { background-color: #f1c40f; color: #000; }
+    body.dark-mode .courts-btn { background-color: #e77e70; color: #000; }
+
     #darkModeToggle {
       position: fixed;
       top: 20px;
@@ -223,44 +180,33 @@
       cursor: pointer;
       font-size: 1rem;
       box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-      transition: background 0.3s ease;
       z-index: 1000;
     }
-    
+
     #darkModeToggle:hover {
       background: #1c5980;
     }
-    
-    @media (max-width: 600px) {
-      header h1 { font-size: 2rem; }
-      header h3 { font-size: 1rem; }
-      .container { padding: 20px; }
-    }
-    
-    /* Modal styles for preview */
+
     #previewModal {
       display: none;
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       background: rgba(0,0,0,0.7);
       z-index: 2000;
       justify-content: center;
       align-items: center;
     }
-    
+
     #modalContent {
       position: relative;
-      width: 80%;
-      height: 80%;
+      width: 80%; height: 80%;
       background: #fff;
       border-radius: 8px;
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
       overflow: hidden;
     }
-    
+
     #closeModal {
       position: absolute;
       top: 10px;
@@ -268,198 +214,152 @@
       font-size: 2rem;
       color: #333;
       cursor: pointer;
-      z-index: 2100;
     }
-    
+
     #previewFrame {
-      width: 100%;
-      height: 100%;
+      width: 100%; height: 100%;
       border: none;
     }
-    
-    /* Dark mode adjustments for modal */
-    body.dark-mode #modalContent {
-      background: #1e1e1e;
-    }
-    body.dark-mode #closeModal {
-      color: #e0e0e0;
-    }
+
+    body.dark-mode #modalContent { background: #1e1e1e; }
+    body.dark-mode #closeModal { color: #e0e0e0; }
   </style>
 </head>
 <body>
-  <!-- Dark Mode Toggle Button -->
   <button id="darkModeToggle">Dark Mode</button>
-  
+
   <div class="container">
     <header>
       <img src="https://i.imgur.com/Cw65AfX.png" alt="Logo">
       <h1>Mayflower District Court for the County of Clark</h1>
       <h3>Mersea Courthouse Basement</h3>
     </header>
-    
+
     <p>This is an official record-keeping site for transcripts and previous case documents. Attached images are converted to base64 to ensure preservation.</p>
-    
+
     <h1 class="section-title">Archived Cases</h1>
-    <!-- Search bar -->
     <input type="text" id="searchBar" placeholder="Search Cases...">
-    <ul id="volume1"></ul>
+    <ul id="caseList"></ul>
   </div>
-  
-  <!-- Preview Modal -->
+
   <div id="previewModal">
     <div id="modalContent">
       <span id="closeModal">&times;</span>
       <iframe id="previewFrame" src=""></iframe>
     </div>
   </div>
-  
+
   <script>
     const repoOwner = 'krabzholder';
     const repoName = 'ack-mayflower-pacer';
     let allFiles = [];
-    
-    // Simple formatting for file names (customize as needed)
+
     function formatFileName(fileName) {
-      let name = fileName.replace(/\.html$/, '');
-      return name.replace(/-/g, ' ');
+      return fileName.replace(/\.html$/, '').replace(/-/g, ' ');
     }
-    
-    // This function fetches the file's content and checks for both Trello and Courts site links.
-    function addExternalButtons(fileUrl, itemContainer) {
+
+    function createBadge(volume) {
+      const badge = document.createElement('span');
+      badge.className = 'volume-badge';
+      if (volume === 'Volume 2') badge.classList.add('volume2-badge');
+      badge.textContent = volume;
+      return badge;
+    }
+
+    function addExternalButtons(fileUrl, container) {
       fetch(fileUrl)
-        .then(response => response.text())
+        .then(res => res.text())
         .then(text => {
-          // Look for a Trello card link using regex /trello\.com\/c\/([a-zA-Z0-9]+)/
-          const trelloRegex = /trello\.com\/c\/([a-zA-Z0-9]+)/;
-          const trelloMatch = text.match(trelloRegex);
-          if (trelloMatch && trelloMatch[1]) {
-            const trelloCardId = trelloMatch[1];
-            const trelloUrl = `https://trello.com/c/${trelloCardId}`;
-            const trelloBtn = document.createElement('button');
-            trelloBtn.textContent = 'Trello Card';
-            trelloBtn.classList.add('trello-btn');
-            trelloBtn.addEventListener('click', function() {
-              window.open(trelloUrl, '_blank');
-            });
-            itemContainer.appendChild(trelloBtn);
+          const trello = text.match(/trello\.com\/c\/([a-zA-Z0-9]+)/);
+          if (trello) {
+            const btn = document.createElement('button');
+            btn.textContent = 'Trello Card';
+            btn.className = 'trello-btn';
+            btn.onclick = () => window.open(`https://trello.com/c/${trello[1]}`, '_blank');
+            container.appendChild(btn);
           }
-          
-          // Look for a Courts site link using regex /courts\.clarkcounty\.site\/view\/(\d+)/
-          const courtsRegex = /courts\.clarkcounty\.site\/view\/(\d+)/;
-          const courtsMatch = text.match(courtsRegex);
-          if (courtsMatch && courtsMatch[1]) {
-            const courtsId = courtsMatch[1];
-            const courtsUrl = `https://courts.clarkcounty.site/view/${courtsId}`;
-            const courtsBtn = document.createElement('button');
-            courtsBtn.textContent = 'Courts Site';
-            courtsBtn.classList.add('courts-btn');
-            courtsBtn.addEventListener('click', function() {
-              window.open(courtsUrl, '_blank');
-            });
-            itemContainer.appendChild(courtsBtn);
+          const courts = text.match(/courts\.clarkcounty\.site\/view\/(\d+)/);
+          if (courts) {
+            const btn = document.createElement('button');
+            btn.textContent = 'Courts Site';
+            btn.className = 'courts-btn';
+            btn.onclick = () => window.open(`https://courts.clarkcounty.site/view/${courts[1]}`, '_blank');
+            container.appendChild(btn);
           }
-        })
-        .catch(err => console.error('Error fetching file for external link parsing:', err));
+        });
     }
-    
-    async function fetchFileList(folderPath, listId) {
-      const apiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${folderPath}`;
-      try {
-        const response = await fetch(apiUrl);
-        if (!response.ok) throw new Error(`Failed to fetch file list from ${folderPath}`);
-        const files = await response.json();
-        allFiles = files;
-        updateFileList(files, listId, folderPath);
-      } catch (error) {
-        console.error(error);
-      }
+
+    async function fetchFiles(folder, volume) {
+      const res = await fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/contents/${folder}`);
+      const files = await res.json();
+      return files.map(f => ({ ...f, volume, folder }));
     }
-    
-    function updateFileList(files, listId, folderPath) {
-      const fileList = document.getElementById(listId);
-      fileList.innerHTML = '';
-      
+
+    function updateList(files) {
+      const list = document.getElementById('caseList');
+      list.innerHTML = '';
       files.forEach(file => {
-        const listItem = document.createElement('li');
-        const itemContainer = document.createElement('div');
-        itemContainer.classList.add('file-item');
-        
-        const displayName = formatFileName(file.name);
-        const nameElem = document.createElement('span');
-        nameElem.classList.add('file-name');
-        nameElem.textContent = displayName;
-        
-        // Create Preview button
-        const previewBtn = document.createElement('button');
-        previewBtn.textContent = 'Preview';
-        previewBtn.classList.add('preview-btn');
-        previewBtn.addEventListener('click', function() {
-          openPreviewModal(`https://${repoOwner}.github.io/${repoName}/${folderPath}/${encodeURIComponent(file.name)}`);
-        });
-        
-        // Create Open in New Tab button
-        const openBtn = document.createElement('button');
-        openBtn.textContent = 'Open in New Tab';
-        openBtn.classList.add('open-btn');
-        openBtn.addEventListener('click', function() {
-          window.open(`https://${repoOwner}.github.io/${repoName}/${folderPath}/${encodeURIComponent(file.name)}`, '_blank');
-        });
-        
-        itemContainer.appendChild(nameElem);
-        itemContainer.appendChild(previewBtn);
-        itemContainer.appendChild(openBtn);
-        
-        // Add external buttons (Trello and/or Courts Site) if links are found in the file content
-        const fileUrl = `https://${repoOwner}.github.io/${repoName}/${folderPath}/${encodeURIComponent(file.name)}`;
-        addExternalButtons(fileUrl, itemContainer);
-        
-        listItem.appendChild(itemContainer);
-        fileList.appendChild(listItem);
+        const li = document.createElement('li');
+        const wrap = document.createElement('div');
+        wrap.className = 'file-item';
+
+        const name = document.createElement('span');
+        name.className = 'file-name';
+        name.textContent = formatFileName(file.name);
+        name.appendChild(createBadge(file.volume));
+
+        const preview = document.createElement('button');
+        preview.textContent = 'Preview';
+        preview.className = 'preview-btn';
+        const url = `https://${repoOwner}.github.io/${repoName}/${file.folder}/${file.name}`;
+        preview.onclick = () => openPreviewModal(url);
+
+        const open = document.createElement('button');
+        open.textContent = 'Open in New Tab';
+        open.className = 'open-btn';
+        open.onclick = () => window.open(url, '_blank');
+
+        wrap.append(name, preview, open);
+        addExternalButtons(url, wrap);
+        li.appendChild(wrap);
+        list.appendChild(li);
       });
     }
-    
-    function filterFiles(searchTerm) {
-      const filteredFiles = allFiles.filter(file => {
-        let displayName = formatFileName(file.name).toLowerCase();
-        return displayName.includes(searchTerm.toLowerCase());
-      });
-      updateFileList(filteredFiles, 'volume1', 'volume1');
+
+    function openPreviewModal(url) {
+      document.getElementById('previewFrame').src = url;
+      document.getElementById('previewModal').style.display = 'flex';
     }
-    
-    // Initial fetch of files for 'volume1'
-    fetchFileList('volume1', 'volume1');
-    
-    // Search bar event listener
-    document.getElementById('searchBar').addEventListener('input', function(e) {
-      filterFiles(e.target.value);
-    });
-    
-    // Dark mode toggle
-    document.getElementById('darkModeToggle').addEventListener('click', function() {
+
+    document.getElementById('closeModal').onclick = () => {
+      document.getElementById('previewModal').style.display = 'none';
+      document.getElementById('previewFrame').src = "";
+    };
+
+    window.onclick = e => {
+      if (e.target === document.getElementById('previewModal')) {
+        document.getElementById('previewModal').style.display = 'none';
+        document.getElementById('previewFrame').src = "";
+      }
+    };
+
+    document.getElementById('darkModeToggle').onclick = function () {
       document.body.classList.toggle('dark-mode');
       this.textContent = document.body.classList.contains('dark-mode') ? 'Light Mode' : 'Dark Mode';
+    };
+
+    document.getElementById('searchBar').addEventListener('input', e => {
+      const term = e.target.value.toLowerCase();
+      const filtered = allFiles.filter(f => formatFileName(f.name).toLowerCase().includes(term));
+      updateList(filtered);
     });
-    
-    // Modal preview functionality
-    const previewModal = document.getElementById('previewModal');
-    const previewFrame = document.getElementById('previewFrame');
-    const closeModal = document.getElementById('closeModal');
-    
-    function openPreviewModal(url) {
-      previewFrame.src = url;
-      previewModal.style.display = 'flex';
-    }
-    
-    closeModal.addEventListener('click', function() {
-      previewModal.style.display = 'none';
-      previewFrame.src = "";
-    });
-    
-    window.addEventListener('click', function(event) {
-      if (event.target === previewModal) {
-        previewModal.style.display = 'none';
-        previewFrame.src = "";
-      }
+
+    Promise.all([
+      fetchFiles('volume1', 'Volume 1'),
+      fetchFiles('volume2', 'Volume 2')
+    ]).then(([v1, v2]) => {
+      allFiles = [...v1, ...v2];
+      updateList(allFiles);
     });
   </script>
 </body>
