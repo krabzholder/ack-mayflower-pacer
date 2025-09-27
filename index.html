@@ -129,6 +129,10 @@
       background-color: #28a745;
     }
 
+    .volume4-badge {
+      background-color: #189eb6;
+    }
+
     .preview-btn, .open-btn, .trello-btn, .courts-btn {
       margin: 5px;
       padding: 5px 10px;
@@ -267,6 +271,7 @@
       badge.className = 'volume-badge';
       if (volume === 'Volume 2') badge.classList.add('volume2-badge');
       if (volume === 'Volume 3') badge.classList.add('volume3-badge');
+      if (volume === 'Volume 4') badge.classList.add('volume4-badge');
       badge.textContent = volume;
       return badge;
     }
@@ -362,9 +367,10 @@
     Promise.all([
       fetchFiles('volume1', 'Volume 1'),
       fetchFiles('volume2', 'Volume 2'),
-      fetchFiles('volume3', 'Volume 3')
-    ]).then(([v1, v2, v3]) => {
-      allFiles = [...v1, ...v2, ...v3];
+      fetchFiles('volume3', 'Volume 3'),
+      fetchFiles('volume4', 'Volume 4')
+    ]).then(([v1, v2, v3, v4]) => {
+      allFiles = [...v1, ...v2, ...v3, ...v4];
       updateList(allFiles);
     });
   </script>
